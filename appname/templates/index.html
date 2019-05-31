@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+{{user.username}}님 환영합니다<br>
+사는 곳 : {{user.profile.region}}<br>
+닉네임 : {{user.profile.nickname}}<br>
+
+{% load staticfiles %}
+<img src="{% static 'untitled.png' %}"></img>
+
+<form action="{%url 'logout'%}" method="post">
+    {%csrf_token%}
+    <input type="submit" value="로그아웃">
+</form>
+<a href="{%url 'create'%}"><button type="button" class="btn btn-outline-danger">글쓰기</button></a>
+
+{% else %}
+<a href="{%url 'login'%}">로그인</a>
+<a href="{%url 'signup'%}">회원가입</a>
+
+{% endif %}
+
+<div class="container" style="background-color:white; height:100vh">
+    <form action="{%url 'search'%}">
+            <select name="search_filter">
+                <option value="제목">제목</option>
+                <option value="내용">내용</option>
+                <option value="제목+내용">제목+내용</option>
+            </select>
+        <input type="text" name="search">
+        <input type="submit" name="검색">
+    </form>
+    <form action="{%url 'category'%}">
+        <select name="category">
+            <option value="공지">공지</option>
+            <option value="자유">자유</option>
+            <option value="질문">질문</option>
+        </select>
+        <input type="submit" value="분류">
+    </form>
+
+    <br>
+    {%for p in posts%}
+    <p>카테고리 : {{p.category}}</p>
+    <a href ="{%url 'read' p.id%}">글 제목 : {{p.table_name1.title}}</a>
+    <p>글 내용 : {{p.table_name2|truncatewords:10}}</p>
+    <p>글 작성 시간 : {{p.table_name3}}</p>
+    <p>글 수정 시간 : {{p.table_name4}}</p>
+    <hr>
+    {%endfor%}
+    <nav>
+            <ul class="pagination">  
+                {% if posts.has_previous %}
+                <li class="page-item "><a class="page-link" href="?page={{ posts.previous_page_number }}">&lt;</a></li>
+                {% endif %} 
+                {% if posts.number > 2 %}
+                <li class="page-item"><a class="page-link" href="?page=1">&lt;&lt;</a></li>
+                {%endif%}
+                {% if posts.has_next %}
+                <li class="page-item ml-auto"><a class="page-link" href="?page={{ posts.next_page_number }}">&gt;</a></li>
+                {% endif %}
+            </ul>
+    </nav>
+</div>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo');
+    body{
+        font-family: 'Nanum Myeongjo', serif;
+        font-family: 'Nanum Gothic Coding', monospace;
+        background-color:violet;
+    }
+</style>
+{% endblock %}

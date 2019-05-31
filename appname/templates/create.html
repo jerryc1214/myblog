@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>글쓰기 페이지</h1>
+<form action="{%url 'create'%}" method="POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <p>카테고리</p>
+    <select name="category">
+        <option value="공지">공지</option>
+        <option value="자유">자유</option>
+        <option value="질문">질문</option>
+    </select>
+    <p>글제목</p>
+    <input type="text" name="post.table_name1">
+    <p>글내용</p>
+    <textarea name="post.table_name2" cols="30" rows="10"></textarea>
+    <input type="file" name="pic"><br>
+    <input type="submit" value="글쓰기">
+</form>
+{% endblock %}

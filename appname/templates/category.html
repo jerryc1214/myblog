@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+검색결과
+{%for p in posts%}
+    <p>카테고리 : {{p.category}}</p>
+    <a href ="{%url 'read' p.id%}">글 제목 : {{p.table_name1.title}}</a>
+    <p>글 내용 : {{p.table_name2|truncatewords:10}}</p>
+    <p>글 작성 시간 : {{p.table_name3}}</p>
+    <p>글 수정 시간 : {{p.table_name4}}</p>
+    <hr>
+{%endfor%}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>글 수정 페이지</h1>
+<form action="{%url 'update' post.id%}" method="POST">
+    {%csrf_token%}
+    <p>글제목</p>
+    <input type="text" name="post.table_name1" value="{{post.table_name1}}">
+    <p>글내용</p>
+    <textarea name="post.table_name2" cols="30" rows="10">{{post.table_name2}}</textarea>
+    <input type="submit" value="글쓰기">
+</form>
+{% endblock %}
